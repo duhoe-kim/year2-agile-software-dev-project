@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+    About Us | Nutrition Wisdoms
+{% endblock %}
+
+{% block nav_items %}
+    <a class="nav-item nav-link" id="sign-up" href ="{{url_for('register')}}">Sign Up</a>
+{% endblock %}
+
+<!-- About us contents -->
+{% block content %}
+    <div align="justify">
+        <!--About us title-->
+        <h1 class="pb-4">About Us</h1>
+        
+        <h2>Who We Are</h2>
+        <p>
+            We are a group of students, who started this ingredient recommendation web application, named Nutrition Wisdoms, 
+            in hopes to reduce the struggles for people who have no idea what to eat and how much to intake. 
+        </p></br>
+        <h2>How Do We Help</h2>
+        <p>
+            We hope to provide ingredient recommendations for users who wish to manage their struggles to prepare meals, weight and 
+            health based on The Healthy Plate. 
+            We have explored about the measures to determine how weight could be managed and studied about how diets are classified.
+        </p></br>
+        <h2>Who Do We Target</h2>
+        <p>
+            We target potential users, aged 18 years old and above, who often cook meals at home and 
+            struggle with what they can prepare for their meals due to various factors. 
+            </br>
+            </br>
+            People, who are interested in cooking more meals at home in the hopes to manage their weight, 
+            can seek suggestions on our Nutrition Wisdoms web application. 
+            They will be able to manage their calorie intake and track their weight change. 
+        </p></br>
+        <h2>Our Scope / Disclaimer</h2>
+        <p>
+            As Nutrition Wisdoms is made to focus on recommending ingredients mainly based on their body mass index as its unique main feature, 
+            we would like to target our general community and aim to include those who have straightforward personal considerations which are 
+            common in our community. 
+            </br>
+            </br>
+            We will also make sure to comply with Singapore’s Personal Data Protection Act to utilise users’ data solely 
+            for the benefit of providing better recommendations to our potential users. 
+            </br>
+            </br>
+            However, we will limit our scope within Singapore in the consideration to delegate more time for the development of our web application. 
+            In addition, we will highlight to the users that Nutrition Wisdoms is not a website that contains every possible personal considerations 
+            and take our recommendations as suggestions but not a substitute of healthcare professionals.
+        </p>
+    </div>
+{% endblock %}

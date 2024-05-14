@@ -1,0 +1,11 @@
+:root {
+    --frame-color: #8dcbee;
+}
+
+nav {
+    background-color: var(--frame-color)
+}
+
+footer {
+    background-color: var(--frame-color);
+}

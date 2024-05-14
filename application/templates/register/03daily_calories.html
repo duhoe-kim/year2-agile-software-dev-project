@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register | Nutrition Wisdoms
+{% endblock %}
+
+{% block nav_items %}
+    <a class="nav-item nav-link" href ="{{url_for('login')}}">Sign in</a>
+{% endblock %}
+
+{% block content %}    
+    <!-- Progression Bar -->
+    <h5>Your Progress:</h5>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">75%</div>    </div>
+    <br>
+
+    <div class="bg-light bg-gradient border p-4">
+        <!-- Instruction of the page -->
+        <h1> We like to know more about you!</h1>
+        <hr class="w-100 clearfix" />
+    
+        <h5> Please fill in the following:</h5>
+        
+        <form novalidate method="POST"> {{ form.csrf_token }}
+            <div class="row form-group">
+                <div class="col-5 col-form-label text-end">{{ form.gender.label }}</div>
+                <div class="col-5 text-start">
+                    {% for field in form.gender %}
+                        {% if field.data == gender_input %}
+                            <td>{{ field(class="btn-check", checked="true") }}</td>
+                        {% else %}
+                            <td>{{ field(class="btn-check") }}</td>
+                        {% endif %}  
+                        <td>{{ field.label(class="btn btn-outline-secondary") }}</td>
+                    {% endfor %}
+                    <br>
+                    {% if form.gender.errors %}
+                        {% for error in form.gender.errors%}
+                            <small class="form-text text-danger">*{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                    
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-5 col-form-label text-end">{{ form.age.label }}</div>
+                <div class="col-5 text-start">
+                    {{ form.age(value=age_input, class="form-control", placeholder="Enter your age") }}
+                    {% if form.age.errors %}
+                        {% for error in form.age.errors%}
+                            <small class="form-text text-danger">*{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-5 col-form-label text-end">{{ form.activity_level.label}}</div>
+                <div class="col-5 text-start">
+                    {{ form.activity_level(class="form-select") }}
+                    {% if form.activity_level.errors %}
+                        {% for error in form.activity_level.errors%}
+                            <small class="form-text text-danger">*{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div class="row form-group justify-content-center">
+                <div class="col-2">{{ form.submit_back(class="btn btn-primary") }}</div>
+                {% if primary_goal == "maintain" %}     
+                    <div class="col-2">{{ form.submit_next(value="Complete", class="btn btn-primary") }}</div>
+                {% else %}
+                    <div class="col-2">{{ form.submit_next(value="Set target goal", class="btn btn-primary") }}</div>
+                {% endif %}
+            </div>
+        </form>
+    </div>    
+{% endblock %}

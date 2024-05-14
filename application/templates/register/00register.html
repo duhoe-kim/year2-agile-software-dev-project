@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Register | Nutrition Wisdoms
+{% endblock %}
+
+{% block nav_items %}
+    <a class="nav-item nav-link" href ="{{url_for('login')}}">Sign in</a>
+{% endblock %}
+
+{% block content %}
+    <!-- Button => login page -->
+
+    <div class="bg-light bg-gradient border p-4">
+        <!-- Instrcution -->
+        <h1> Register Your Account </h1>
+
+        <!-- Register user ID and password form -->
+        <form novalidate method="POST"> {{ form.csrf_token }}
+            <div class="row form-group">
+                <div class="col-5 col-form-label text-end">{{ form.username.label }}</div>
+                <div class="col-5 text-start">
+                    {{ form.username(class="form-control", placeholder="Enter your new username") }}
+                    {% if form.username.errors %}
+                        {% for error in form.username.errors%}
+                            <small class="form-text text-danger">*{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-5 col-form-label text-end">{{ form.password.label }}</div>
+                <div class="col-5 text-start">
+                    {{ form.password(class="form-control", placeholder="Enter your password") }}
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors%}
+                            <small class="form-text text-danger">*{{ error }}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="row form-group">
+                <div class="col-5 col-form-label text-end">{{ form.re_password.label }}</div>
+                <div class="col-5 text-start">
+                    {{ form.re_password(class="form-control", placeholder="Re-enter your password") }}
+                        {% if form.re_password.errors %}
+                        {% for error in form.re_password.errors%}
+                            <small class="form-text text-danger">*{{ error }}</small>
+                        {% endfor %}
+                    {% endif%}
+                </div>
+            </div>
+
+            <div class="form-group custom-control custom-checkbox">
+                {{ form.agree_policy(class="form-check-input") }}
+                {{ form.agree_policy.label(class="form-check-label") }}
+                <br>
+                {% if form.agree_policy.errors %}
+                    {% for error in form.agree_policy.errors%}
+                        <small class="form-text text-danger">*{{ error }}</small>
+                    {% endfor %}
+                {% endif%}
+            </div>
+
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+    </div>
+    
+{% endblock %}

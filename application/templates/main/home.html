@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Home | Nutrition Wisdoms
+{% endblock %}
+
+{% block nav_items %}
+    <a class="nav-item nav-link" href="{{url_for('setting', username=username)}}">Setting</a>
+    <a class="nav-item nav-link" href="{{url_for('logout', username=username)}}">Logout</a>
+{% endblock %}
+
+{% block content %}
+    <!-- Recommendation daily calorie intake -->
+    <h1 class="py-4" align="center"> 
+        Recommended daily calorie intake: {{daily_calories}}
+    </h1>
+    
+    <!-- Main functions -->
+    <!-- Mealplan -->
+    <form novalidate method="POST"> {{ form.csrf_token }}
+        <div class="row form-group">
+            <div class="col-3 col-form-label text-end">{{ form.target_calories.label }}</div>
+            <div class="col-3 text-start">
+                {{ form.target_calories(class="form-control", placeholder="Enter your daily calories") }}
+            </div>
+            <div class="col-3 col-form-label text-end">{{ form.diet.label }}</div>
+            <div class="col-3 text-start">{{ form.diet(class="form-select") }}</div>
+        </div>
+
+        {% if form.target_calories.errors %}
+            {% for error in form.target_calories.errors%}
+                <small class="form-text text-danger">*{{ error }}</small>
+            {% endfor %}
+        {% endif %}
+        
+        <div class="row form-group justify-content-center">
+            <div class="col-3">{{ form.submit(class="btn btn-primary")}}</div>
+        </div>
+    </form>
+    {% if isEmpty == False %}
+        <table id="pdf" class="table table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">Breakfast</th>
+                <th scope="col">Lunch</th>
+                <th scope="col">Dinner</th>
+                <th scope="col">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                {%- for meal in meals %}
+                    <th scope="row">{{ meal.title}}</th>
+                {% endfor %}
+                <th scope="row">
+                    <p>calories: {{ nutrients.calories }}</p>
+                    <p>carbs: {{ nutrients.carbohydrates}}</p>
+                    <p>protein: {{ nutrients.protein }}</p>
+                    <p>fat: {{ nutrients.fat }}</p></th>
+            </tr>
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

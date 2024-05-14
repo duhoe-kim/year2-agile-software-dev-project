@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Setting | Nutrition Wisdoms
+{% endblock %}
+
+{% block nav_items %}
+    <a class="nav-item nav-link" href="{{url_for('logout', username=username)}}">Logout</a>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid bg-light bg-gradient border p-4">
+        <div class="row flex-nowrap">
+            <!--setting menu-->
+            <div class="bg-white border col-3 p-2" align="center">
+                <h4>Setting Menu</h4>
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link active" href="{{url_for('setting', username=username, option='change-username')}}">Change Username</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{url_for('setting', username=username, option='change-password')}}">Change Password</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{url_for('setting', username=username, option='update-current')}}">Update Current Particular</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{url_for('setting', username=username, option='update-goal')}}">Update Goal</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{url_for('setting', username=username, option='update-target')}}">Update Target</a></li>
+                </ul>
+            </div>
+            
+            <!--setting contents-->
+            <div class="col">
+                <div class="container" align="center">
+                {% if option == "change-username" %}
+                    <h5>Change Username</h5>
+                    <form novalidate method="POST"> {{ username_form.csrf_token }}
+                            <div class="row form-group">
+                                <div class="col-5 col-form-label text-end">{{ username_form.username.label }}</div>
+                                <div class="col-5 text-start">
+                                    {{ username_form.username(class="form-control", placeholder="Enter your new username") }}
+                                    {% if username_form.username.errors %}
+                                        {% for error in username_form.username.errors%}
+                                            <small class="form-text text-danger">*{{ error }}</small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {{ username_form.submit_username(class="btn btn-primary")}}
+                        </form>
+                        
+                {% elif option == "change-password" %}
+                    <h5>Change Password</h5>
+
+                    <form novalidate method="POST"> {{ password_form.csrf_token }}
+                        <div class="row form-group">
+                            <div class="col-5 col-form-label text-end">{{ password_form.password.label }}</div>
+                            <div class="col-5 text-start">
+                                {{ password_form.password(class="form-control", placeholder="Enter your password") }}
+                                {% if password_form.password.errors %}
+                                    {% for error in password_form.password.errors%}
+                                        <small class="form-text text-danger">*{{ error }}</small>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="row form-group">
+                            <div class="col-5 col-form-label text-end">{{ password_form.re_password.label }}</div>
+                            <div class="col-5 text-start">
+                                {{ password_form.re_password(class="form-control", placeholder="Re-enter your password") }}
+                                {% if new_password_input_error %}
+                                    <small class="form-text text-danger">*{{ new_password_input_error }}</small>
+                                {% endif %}
+                                {% if password_form.re_password.errors %}
+                                    {% for error in password_form.re_password.errors%}
+                                        <small class="form-text text-danger">*{{ error }}</small>
+                                    {% endfor %}
+                                {% endif%}
+                            </div>
+                        </div>
+                        {{ password_form.submit_password(class="btn btn-primary")}}
+                    </form>
+
+                {% elif option == "update-current" %}  
+                    <h5>Update Current Particular</h5>
+
+                    <p>Current Weight : {{ current_weight }}</p>
+                    <p>Current Height : {{ current_height }}</p>
+
+                    <form novalidate method="POST"> {{ current_form.csrf_token }}
+                        <div class="row form-group">
+                            <div class="col-5 col-form-label text-end">{{ current_form.current_weight.label }}</div>
+                            <div class="col-5 text-start">
+                                {{ current_form.current_weight(class="form-control", placeholder="Enter your current weight") }}
+                                {% if new_current_weight_input_error %}
+                                    <small class="form-text text-danger">*{{ new_current_weight_input_error }}</small>
+                                {% endif %}
+                                {% if current_form.current_weight.errors %}
+                                    {% for error in current_form.current_weight.errors%}
+                                        <small class="form-text text-danger">*{{ error }}</small>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-5 col-form-label text-end">{{ current_form.current_height.label }}</div>
+                            <div class="col-5 text-start">
+                                {{ current_form.current_height(class="form-control", placeholder="Enter your current height") }}
+                                {% if new_current_height_input_error %}
+                                    <small class="form-text text-danger">*{{ new_current_height_input_error }}</small>
+                                {% endif %}
+                                {% if current_form.current_height.errors %}
+                                    {% for error in current_form.current_height.errors%}
+                                        <small class="form-text text-danger">*{{ error }}</small>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        {{ current_form.submit_current(class="btn btn-primary")}}
+                    </form>
+
+
+                {% elif option == "update-goal" %}
+                    <h5>Update Goal</h5>
+
+                    <form novalidate method="POST"> {{ goal_form.csrf_token }}
+                        <div class="row form-group">
+                            <div class="col-5 col-form-label text-end">{{ goal_form.primary_goal.label}}</div>
+                            <div class="col-5 text-start">
+                                {{ goal_form.primary_goal(class="form-select", select=primary_goal_selected) }}
+                                {% if goal_form.primary_goal.errors %}
+                                    {% for error in goal_form.primary_goal.errors%}
+                                        <small class="form-text text-danger">*{{ error }}</small>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row form-group">
+                            <div class="col-5 col-form-label text-end">{{ goal_form.activity_level.label}}</div>
+                            <div class="col-5 text-start">
+                                {{ goal_form.activity_level(class="form-select") }}
+                                {% if goal_form.activity_level.errors %}
+                                    {% for error in goal_form.activity_level.errors%}
+                                        <small class="form-text text-danger">*{{ error }}</small>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                
+                        {{ goal_form.submit_goal(class="btn btn-primary") }}
+                    </form>
+
+                {% elif option == "update-target" %}
+                    {% if primary_goal_selected == "maintain weight" %}
+                        <p class="text-center">
+                            To set target weight and date, <br>
+                            Please select gain/lose weight as goal in Update Goal
+                        </p>
+                    {% elif primary_goal_selected != "maintain weight" %}
+                        <h5>Update Target</h5>
+
+                        <p>Current Target Weight : {{ current_target_weight }}</p>
+                        <p>Current Target Date : {{ current_target_date }}</p>
+
+                        <form novalidate method="POST"> {{ target_form.csrf_token }}
+                            <div class="row form-group">
+                                <div class="col-5 col-form-label text-end">{{ target_form.target_weight.label }}</div>
+                                <div class="col-5 text-start">
+                                    {{ target_form.target_weight(class="form-control", placeholder="Enter your target weight") }}
+                                    {% if target_form.target_weight.errors %}
+                                        {% for error in target_form.target_weight.errors%}
+                                            <small class="form-text text-danger">*{{ error }}</small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="row form-group">
+                                <div class="col-5 col-form-label text-end">{{ target_form.target_date.label }}</div>
+                                <div class="col-5 text-start">
+                                    {{ target_form.target_date(class="form-control") }}
+                                    {% if target_form.target_date.errors %}
+                                        {% for error in target_form.target_date.errors%}
+                                            <small class="form-text text-danger">*{{ error }}</small>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {{ target_form.submit_target(class="btn btn-primary") }}
+                        </form>
+                    {% endif %}
+                {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

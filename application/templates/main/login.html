@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Nutrition Wisdoms
+{% endblock %}
+
+{% block nav_items %}
+    <a class="nav-item nav-link" id="sign-up" href ="{{url_for('register')}}">Sign Up</a>
+{% endblock %}
+
+{% block content %}
+    <!-- Welcome Statement -->
+    <h1> Login to Your Account </h1>
+    <!-- Slogan -->
+    <h3> Eat smart! Live healthily! Have fun! </h3>
+    <br>
+    
+    <!-- Login Form -->
+    <form novalidate method="POST"> {{ form.csrf_token }}        
+        <div class="form-group row">
+            <div class="col-5 col-form-label text-end">{{ form.username.label }}</div>
+            <div class="col-4 text-start">
+                {{ form.username(class="form-control", placeholder="Enter your username") }}
+                {% if form.username.errors %}
+                    {% for error in form.username.errors%}
+                        <small class="form-text text-danger">*{{ error }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="row form-group">
+            <div class="col-5 col-form-label text-end">{{ form.password.label }}</div>
+            <div class="col-4 text-start">
+                {{ form.password(class="form-control", placeholder="Enter your password") }}
+                {% if form.password.errors %}
+                    {% for error in form.password.errors%}
+                        <small class="form-text text-danger">*{{ error }}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+        
+    </form>
+{% endblock %}
